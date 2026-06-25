@@ -16,10 +16,7 @@ import (
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
-	"github.com/QuantumNous/new-api/setting"
 	"github.com/QuantumNous/new-api/setting/operation_setting"
-
-	"github.com/QuantumNous/new-api/constant"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -173,6 +170,8 @@ func Logout(c *gin.Context) {
 	})
 }
 
+/*
+/*
 func Register(c *gin.Context) {
 	if !common.RegisterEnabled {
 		common.ApiErrorI18n(c, i18n.MsgUserRegisterDisabled)
@@ -270,6 +269,8 @@ func Register(c *gin.Context) {
 	})
 	return
 }
+
+*/
 
 func GetAllUsers(c *gin.Context) {
 	pageInfo := common.GetPageQuery(c)

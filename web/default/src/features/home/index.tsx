@@ -16,7 +16,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/stores/auth-store'
 import { Markdown } from '@/components/ui/markdown'
 import { PublicLayout } from '@/components/layout'
@@ -25,7 +24,6 @@ import { CTA, Features, Hero, HowItWorks, Stats } from './components'
 import { useHomePageContent } from './hooks'
 
 export function Home() {
-  const { t } = useTranslation()
   const { auth } = useAuthStore()
   const isAuthenticated = !!auth.user
   const { content, isLoaded, isUrl } = useHomePageContent()
@@ -34,7 +32,7 @@ export function Home() {
     return (
       <PublicLayout showMainContainer={false}>
         <main className='flex min-h-screen items-center justify-center'>
-          <div className='text-muted-foreground'>{t('Loading...')}</div>
+          <div className='text-muted-foreground'>加载中...</div>
         </main>
       </PublicLayout>
     )
@@ -48,7 +46,7 @@ export function Home() {
             <iframe
               src={content}
               className='h-screen w-full border-none'
-              title={t('Custom Home Page')}
+              title='Custom Home Page'
             />
           ) : (
             <div className='container mx-auto py-8'>
