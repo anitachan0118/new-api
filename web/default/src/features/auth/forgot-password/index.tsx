@@ -35,7 +35,7 @@ export function ForgotPassword() {
               'Enter your registered email and we will send you a link to reset your password.'
             )}
           </p>
-          <p className='text-muted-foreground text-left text-sm sm:text-base'>
+          {/* <p className='text-muted-foreground text-left text-sm sm:text-base'>
             {t("Don't have an account?")}{' '}
             <Link
               to='/sign-up'
@@ -44,7 +44,7 @@ export function ForgotPassword() {
               {t('Sign up')}
             </Link>
             .
-          </p>
+          </p> */}
         </div>
 
         <ForgotPasswordForm className='space-y-0' />
