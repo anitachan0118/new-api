@@ -27,42 +27,43 @@ services:
     volumes:
       - dev_data:/data
     environment:
-      - SQL_DSN=postgresql://root:123456@postgres:5432/new-api
-      - REDIS_CONN_STRING=redis://redis
+      - ERROR_LOG_ENABLED=true
+      - SQL_DSN=root:123456@tcp(192.168.2.125:3306)/newapi?parseTime=true
+      - LOG_SQL_DSN=root:123456@tcp(192.168.2.125:3306)/newapi?parseTime=true
       - TZ=Asia/Shanghai
       - BATCH_UPDATE_ENABLED=true
-    depends_on:
-      redis:
-        condition: service_started
-      postgres:
-        condition: service_healthy
+#    depends_on:
+#      redis:
+#        condition: service_started
+#      postgres:
+#        condition: service_healthy
     networks:
       - dev-network
 
-  redis:
-    image: redis:7-alpine
-    container_name: new-api-dev-redis
-    restart: unless-stopped
-    networks:
-      - dev-network
-
-  postgres:
-    image: postgres:15-alpine
-    container_name: new-api-dev-pg
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: new-api
-    volumes:
-      - dev_pg_data:/var/lib/postgresql/data
-    networks:
-      - dev-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root -d new-api"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
+#  redis:
+#    image: redis:7-alpine
+#    container_name: new-api-dev-redis
+#    restart: unless-stopped
+#    networks:
+#      - dev-network
+#
+#  postgres:
+#    image: postgres:15-alpine
+#    container_name: new-api-dev-pg
+#    restart: unless-stopped
+#    environment:
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: 123456
+#      POSTGRES_DB: new-api
+#    volumes:
+#      - dev_pg_data:/var/lib/postgresql/data
+#    networks:
+#      - dev-network
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U root -d new-api"]
+#      interval: 5s
+#      timeout: 3s
+#      retries: 5
 
 volumes:
   dev_data:
