@@ -23,7 +23,7 @@ type ThemeAssets struct {
 
 func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 	defaultFS := common.EmbedFolder(assets.DefaultBuildFS, "web/default/dist")
-	classicFS := common.EmbedFolder(assets.ClassicBuildFS, "web/classic/dist")
+	classicFS := common.EmbedFolder(assets.ClassicBuildFS, "web/default/dist")
 	themeFS := common.NewThemeAwareFS(defaultFS, classicFS)
 
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
@@ -32,7 +32,7 @@ func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 	router.Use(static.Serve("/", themeFS))
 	router.NoRoute(func(c *gin.Context) {
 		c.Set(middleware.RouteTagKey, "web")
-		if strings.HasPrefix(c.Request.RequestURI, "/v1") || strings.HasPrefix(c.Request.RequestURI, "/api") || strings.HasPrefix(c.Request.RequestURI, "/assets") {
+		if isAPIPath(c.Request.RequestURI) || isStaticAsset(c.Request.RequestURI) {
 			controller.RelayNotFound(c)
 			return
 		}
@@ -43,4 +43,20 @@ func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 			c.Data(http.StatusOK, "text/html; charset=utf-8", assets.DefaultIndexPage)
 		}
 	})
+}
+
+func isAPIPath(uri string) bool {
+	return strings.HasPrefix(uri, "/v1") || strings.HasPrefix(uri, "/api") || strings.HasPrefix(uri, "/assets")
+}
+
+func isStaticAsset(uri string) bool {
+	if strings.HasPrefix(uri, "/static/") {
+		return true
+	}
+	for _, ext := range []string{".js", ".css", ".woff", ".woff2", ".ttf", ".ico", ".png", ".svg", ".json", ".map"} {
+		if strings.HasSuffix(uri, ext) {
+			return true
+		}
+	}
+	return false
 }
