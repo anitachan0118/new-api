@@ -14,7 +14,7 @@ import (
 
 var StartTime = time.Now().Unix() // unit: second
 var Version = "v1.0.0"            // this hard coding will be replaced automatically when building, no need to manually change
-var SystemName = "Wwfn-API"
+var SystemName = "万物词元"
 var Footer = "Copyright © 2023 万物富能（深圳）科技有限公司 粤ICP备2022084789号-1"
 var Logo = ""
 var TopUpLink = ""
